@@ -1,4 +1,4 @@
-package com.complyco.sample
+package com.complyco.sample.compose.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.complyco.sample.ui.theme.ComplySampleTheme
+import com.complyco.sample.compose.ui.theme.ComplySampleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.complyco.sample.ui.theme
+package com.complyco.sample.compose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
