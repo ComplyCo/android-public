@@ -1,6 +1,6 @@
 # ComplyCo - Sample Applications
 
-The purpose of this project is to showcase solutions and best practices on how to implement ComplyCo's SDK (**ComplySDK**).
+The purpose of this project is to showcase solutions and best practices on how to implement ComplyCo's private SDK [**ComplySDK**].
 
 This repository is also responsible for hosting the SDK packages in GitHub Packages, for the Maven repository to leverage as needed.
 
@@ -24,4 +24,4 @@ _TBD..._
 
 ---------------
 
-_For any questions or concerns, please feel free to contact us, to create an issue!_
+_For any questions or concerns, please feel free to contact us 👋 to create an issue! 🎟️_
