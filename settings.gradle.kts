@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ComplySample"
-include(":app")
+include(":sample-compose")
  
