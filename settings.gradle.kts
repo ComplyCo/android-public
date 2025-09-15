@@ -16,6 +16,20 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+
+        val githubPassword: String = providers.gradleProperty("PUBLISH_PASSWORD").orElse(System.getenv("PUBLISH_PASSWORD")).get()
+        if (githubPassword.isNotBlank()) {
+            println("Pulling GitHub Packages with credentials: ${githubPassword.take(6)}...")
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/ComplyCo/android-public")
+                credentials {
+                    username = "x-access-token"
+                    password = githubPassword
+                }
+            }
+        } else println("Unable to pull GitHub Packages due to missing credentials")
     }
 }
 
