@@ -15,6 +15,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
 
@@ -35,4 +36,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ComplySample"
 include(":sample-compose")
- 
+include(":sample-xml")
