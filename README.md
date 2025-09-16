@@ -32,4 +32,4 @@ _TBD..._
 
 ---------------
 
-_For any questions or concerns, please feel free to contact us 👋 to [create an issue](    https://github.com/ComplyCo/android-public/issues/new?template=bug_report.md)! 🎟️_
+_For any questions or concerns, please feel free to contact us 👋 or to [create an issue](    https://github.com/ComplyCo/android-public/issues/new?template=bug_report.md)! 🎟️_
