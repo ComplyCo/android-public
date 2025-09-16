@@ -1,4 +1,4 @@
-package com.complyco.sample.compose.ui
+package com.complyco.sample.compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
