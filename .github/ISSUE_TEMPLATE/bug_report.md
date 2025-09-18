@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: Report a bug to help us improve
-title: '[BUG] <Brief and descriptive title'
+title: '[BUG] <Brief and descriptive title>'
 labels: bug
 assignees: ivangarzab
 
@@ -25,9 +25,9 @@ assignees: ivangarzab
 <What you expected to happen>
 
 **Steps to Reproduce**
-1.
-2.
-3.
+1. _Open the sample app_
+2. _Do something_
+3. _See error..._
 
 **Additional Context**
 <Any other relevant details, logs, or screenshots>
