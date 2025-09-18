@@ -1,3 +1,6 @@
+import com.complyco.gradle.config.AndroidConfig
+import com.complyco.gradle.config.JavaConfig
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.complyco.sample.xml"
-    compileSdk = 36
+    compileSdk = AndroidConfig.SDK_COMPILE
 
     defaultConfig {
         applicationId = "com.complyco.sample.xml"
-        minSdk = 28
-        targetSdk = 36
+        minSdk = AndroidConfig.SDK_MIN
+        targetSdk = AndroidConfig.SDK_TARGET
         versionCode = 1
         versionName = "1.0"
 
@@ -27,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaConfig.JAVA_VERSION
+        targetCompatibility = JavaConfig.JAVA_VERSION
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaConfig.JVM_TARGET
     }
 }
 
