@@ -10,7 +10,7 @@ For a guide on how to implement the **ComplySDK** into your own application, ple
 
 _**NOTE**: If the link to the step-by-step guide doc does not work, please ask for access!_
 
-Alternative, check out the [Sample Apps](#sample-apps) inside this project for a functional example on how to integrate the **ComplySDK** packages into your own application.
+Alternatively, check out the [Sample Apps](#sample-apps) inside this project for a functional example on how to integrate the **ComplySDK** packages into your own application.
 
 ## Sample Apps
 
