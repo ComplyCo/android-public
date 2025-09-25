@@ -1,49 +1,36 @@
 package com.complyco.sample.compose
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.complyco.complysdk.core.api.User
 import com.complyco.complysdk.networking.BuildConfig
 import com.complyco.complysdk.networking.auth.models.JwtConfig
 import com.complyco.complysdk.recorder.base.Comply
 import com.complyco.complysdk.recorder.base.ComplyInitializationListener
 import com.complyco.complysdk.recorder.base.error.RecorderError
-import com.complyco.complysdk.recorder.compose.extensions.ComponentType
-import com.complyco.complysdk.recorder.compose.extensions.complianceTrack
 import com.complyco.complysdk.recorder.compose.extensions.initializeCompose
 import com.complyco.complysdk.recorder.compose.extensions.startCompose
 import com.complyco.complysdk.recorder.compose.options.ComposeComplyOptions
+import com.complyco.sample.compose.components.DemoUser
+import com.complyco.sample.compose.screens.Step1Screen
+import com.complyco.sample.compose.screens.Step2Screen
+import com.complyco.sample.compose.screens.Step3Screen
 import com.complyco.sample.compose.ui.theme.ComplySampleTheme
 import com.ivangarzab.bark.Bark
-import com.ivangarzab.webview.data.rememberWebViewState
-import com.ivangarzab.webview.ui.WebView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +39,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComplySampleTheme {
                 Scaffold {
-                    FormScreen(modifier = Modifier.padding(it))
+                    OnboardingNavigation(
+                        modifier = Modifier.padding(it)
+                    )
                 }
             }
         }
@@ -89,140 +78,64 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun FormScreen(
+fun OnboardingNavigation(
     modifier: Modifier = Modifier
 ) {
-    var nameValue by remember { mutableStateOf("") }
-    var isChecked by remember { mutableStateOf(false) }
-    val webState = rememberWebViewState("https://github.com/ivangarzab/composable-webview")
+    val navController = rememberNavController()
 
-    Column(
+    // Mock user data - replace with your actual user data source
+    val mockUser = DemoUser(
+        email = "ivan@complyco.com",
+        username = "ivan-test-user"
+    )
+
+    NavHost(
+        navController = navController,
+        startDestination = "step1",
         modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .background(color = MaterialTheme.colorScheme.background)
-            .complianceTrack(
-                label = "FormScreen",
-                type = ComponentType.CONTENT,
-                backgroundColor = MaterialTheme.colorScheme.background
-            )
     ) {
-        Text(
-            text = "Form Signature",
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .complianceTrack(
-                    label = "FormHeaderText",
-                    type = ComponentType.CONTENT,
-                    value = "Form Signature",
-                    textStyle = MaterialTheme.typography.headlineLarge
-                )
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        WebView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(150.dp)
-                .complianceTrack(
-                    label = "FormWebView",
-                    type = ComponentType.WEBVIEW,
-                    url = webState.lastLoadedUrl
-                ),
-            state = webState
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        TextField(
-            value = nameValue,
-            onValueChange = { nameValue = it },
-            label = { Text("Full Name") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .complianceTrack(
-                    label = "NameTextField",
-                    type = ComponentType.INPUT,
-                    value = nameValue,
-                    textStyle = MaterialTheme.typography.bodyMedium
-                )
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Switch(
-                modifier = Modifier
-                    .weight(1f)
-                    .complianceTrack(
-                        label = "SwitchField",
-                        type = ComponentType.SWITCH,
-                        isOn = isChecked
-                    ),
-                checked = isChecked,
-                onCheckedChange = { isChecked = it }
-            )
-            Text(
-                modifier = Modifier
-                    .weight(4f)
-                    .align(Alignment.CenterVertically)
-                    .complianceTrack(
-                        label = "SwitchText",
-                        type = ComponentType.CONTENT,
-                        value = "I consent to the terms and conditions",
-                        textStyle = MaterialTheme.typography.bodyMedium
-                    ),
-                text = "I consent to the terms and conditions",
-                style = MaterialTheme.typography.bodyMedium
+        composable("step1") {
+            val mockData = remember { mutableStateOf(DemoUser.EMPTY) }
+            val mockPassword = remember { mutableStateOf("") }
+            Step1Screen(
+                modifier = Modifier.fillMaxSize(),
+                user = mockData.value,
+                password = mockPassword.value,
+                onSetData = {
+                    mockData.value = mockUser
+                    mockPassword.value = "123456"
+                },
+                onNavigateToStep2 = {
+                    navController.navigate("step2")
+                }
             )
         }
 
-        Button(
-            onClick = { /* No-op */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .complianceTrack(
-                    label = "SubmitButton",
-                    type = ComponentType.BUTTON,
-                    value = "Submit",
-                    textStyle = MaterialTheme.typography.labelLarge,
-                    backgroundColor = MaterialTheme.colorScheme.primary
-                )
-        ) {
-            Text(
-                text = "Submit",
-                style = MaterialTheme.typography.labelLarge
+        composable("step2") {
+            val mockData = remember { mutableStateOf<List<String>>(emptyList()) }
+            Step2Screen(
+                modifier = Modifier.fillMaxSize(),
+                data = mockData.value,
+                onSetData = { mockData.value = listOf("3", "4", "1", "6", "5", "9") },
+                onNavigateToStep3 = {
+                    navController.navigate("step3")
+                }
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        TextButton(
-            onClick = { /* No-op */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .complianceTrack(
-                    label = "CancelButton",
-                    type = ComponentType.BUTTON,
-                    value = "Cancel",
-                    textStyle = MaterialTheme.typography.labelLarge,
-                    backgroundColor = MaterialTheme.colorScheme.background
-                )
-        ) {
-            Text(
-                text = "Cancel",
-                style = MaterialTheme.typography.labelLarge
+        composable("step3") {
+            val context = LocalContext.current
+            Step3Screen(
+                modifier = Modifier.fillMaxSize(),
+                user = mockUser,
+                onApplicationComplete = {
+                    Toast.makeText(
+                        context,
+                        "Flow Completed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun FormScreenPreview() {
-    FormScreen()
 }
