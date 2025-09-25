@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.complyco.complysdk.recorder.compose.extensions.ComponentType
 import com.complyco.complysdk.recorder.compose.extensions.complianceTrack
 import com.complyco.sample.compose.components.DemoUser
+import com.complyco.sample.compose.ui.theme.ComplySampleTheme
 
 @Composable
 fun Step3Screen(
@@ -112,11 +113,13 @@ fun Step3Screen(
 @Preview
 @Composable
 fun Step3ScreenPreview() {
-    Step3Screen(
-        user = DemoUser(
-            username = "testUser",
-            email = "test@complyco.com"
-        ),
-        onApplicationComplete = {}
-    )
+    ComplySampleTheme {
+        Step3Screen(
+            user = DemoUser(
+                username = "testUser",
+                email = "test@complyco.com"
+            ),
+            onApplicationComplete = {}
+        )
+    }
 }

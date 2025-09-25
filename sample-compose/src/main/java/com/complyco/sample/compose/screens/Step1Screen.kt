@@ -23,6 +23,7 @@ import com.complyco.complysdk.recorder.compose.extensions.ComponentType
 import com.complyco.complysdk.recorder.compose.extensions.complianceTrack
 import com.complyco.sample.compose.components.CustomTextField
 import com.complyco.sample.compose.components.DemoUser
+import com.complyco.sample.compose.ui.theme.ComplySampleTheme
 
 @Composable
 fun Step1Screen(
@@ -151,13 +152,15 @@ fun Step1Screen(
 @Preview
 @Composable
 fun Step1ScreenPreview() {
-    Step1Screen(
-        user = DemoUser(
-            email = "test@complyco.com",
-            username = "testUser"
-        ),
-        password = "123456",
-        onSetData = {},
-        onNavigateToStep2 = {}
-    )
+    ComplySampleTheme {
+        Step1Screen(
+            user = DemoUser(
+                email = "test@complyco.com",
+                username = "testUser"
+            ),
+            password = "123456",
+            onSetData = {},
+            onNavigateToStep2 = {}
+        )
+    }
 }

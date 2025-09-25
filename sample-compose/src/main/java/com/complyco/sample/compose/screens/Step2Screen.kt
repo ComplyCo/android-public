@@ -26,6 +26,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.complyco.complysdk.recorder.compose.extensions.ComponentType
 import com.complyco.complysdk.recorder.compose.extensions.complianceTrack
+import com.complyco.sample.compose.ui.theme.ComplySampleTheme
 
 @Composable
 fun Step2Screen(
@@ -129,10 +130,12 @@ fun Step2Screen(
 @Preview
 @Composable
 fun Step2ScreenPreview() {
-    Step2Screen(
-        modifier = Modifier.fillMaxSize(),
-        data = listOf("3", "4", "1", "6", "5", "9"),
-        onSetData = {},
-        onNavigateToStep3 = {}
-    )
+    ComplySampleTheme {
+        Step2Screen(
+            modifier = Modifier.fillMaxSize(),
+            data = listOf("3", "4", "1", "6", "5", "9"),
+            onSetData = {},
+            onNavigateToStep3 = {}
+        )
+    }
 }
