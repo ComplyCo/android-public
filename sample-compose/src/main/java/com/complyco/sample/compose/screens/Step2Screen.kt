@@ -20,10 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.complyco.complysdk.recorder.compose.extensions.ComponentType
 import com.complyco.complysdk.recorder.compose.extensions.complianceTrack
 import com.complyco.sample.compose.ui.theme.ComplySampleTheme
@@ -96,7 +96,7 @@ fun Step2Screen(
                             .weight(1f)
                             .aspectRatio(1f)
                             .complianceTrack(
-                                label = "CodeDigit${index + 1}",
+                                label = "CodeDigit${index + 1}Text",
                                 type = ComponentType.INPUT,
                                 value = digit
                             ),
