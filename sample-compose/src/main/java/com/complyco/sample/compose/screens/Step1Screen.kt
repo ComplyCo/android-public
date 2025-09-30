@@ -2,7 +2,6 @@ package com.complyco.sample.compose.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.complyco.complysdk.recorder.compose.extensions.ComponentType
@@ -33,20 +33,18 @@ fun Step1Screen(
     onSetData: () -> Unit,
     onNavigateToStep2: () -> Unit
 ) {
-    val isSystemInDarkTheme = isSystemInDarkTheme()
-
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(if (isSystemInDarkTheme) Color.Black else Color.White)
             .combinedClickable(
                 onClick = {},
                 onLongClick = { onSetData() }
             )
+            .background(Color.White)
             .complianceTrack(
                 label = "Step1Screen",
                 type = ComponentType.SCREEN,
-                backgroundColor = if (isSystemInDarkTheme) Color.Black else Color.White
+                backgroundColor = Color.White
             )
     ) {
         Column(
@@ -55,56 +53,69 @@ fun Step1Screen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            val title = "Welcome to your [Bank]"
             Text(
-                text = "Welcome to your [Bank]",
+                text = title,
                 style = MaterialTheme.typography.headlineMedium,
-                color = if (isSystemInDarkTheme) Color.White else Color.Black,
                 modifier = Modifier.complianceTrack(
-                    label = "WelcomeTitle",
+                    label = "WelcomeTitleText",
                     type = ComponentType.CONTENT,
-                    value = "Welcome to your [Bank]",
-                    textStyle = MaterialTheme.typography.headlineMedium
+                    value = title,
+                    textStyle = MaterialTheme.typography.headlineMedium,
+                    textAlignment = TextAlign.Left
                 )
             )
 
+            val subtitle = "Please create a username and password"
             Text(
-                text = "Please create a username and password",
+                text = subtitle,
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (isSystemInDarkTheme) Color.LightGray else Color.DarkGray,
                 modifier = Modifier.complianceTrack(
-                    label = "WelcomeSubtitle",
+                    label = "WelcomeSubtitleText",
                     type = ComponentType.CONTENT,
-                    value = "Please create a username and password",
-                    textStyle = MaterialTheme.typography.bodyLarge
+                    value = subtitle,
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    textAlignment = TextAlign.Left
                 )
             )
 
+            val emailPlaceholder = "Email address"
             CustomTextField(
-                label = "Email address",
+                label = emailPlaceholder,
                 value = user.email,
                 onValueChange = { },
                 readOnly = true,
                 modifier = Modifier.complianceTrack(
                     label = "EmailTextField",
                     type = ComponentType.INPUT,
-                    value = user.email
+                    placeholder = emailPlaceholder,
+                    value = user.email,
+                    borderColor = Color.Black,
+                    borderWidth = 1f,
+                    textAlignment = TextAlign.Left
                 )
             )
 
+            val usernamePlaceholder = "Username"
             CustomTextField(
-                label = "Username",
+                label = usernamePlaceholder,
                 value = user.username,
                 onValueChange = { },
                 readOnly = true,
                 modifier = Modifier.complianceTrack(
                     label = "UsernameTextField",
                     type = ComponentType.INPUT,
-                    value = user.username
+                    placeholder = usernamePlaceholder,
+                    value = user.username,
+                    borderColor = Color.Black,
+                    borderWidth = 1f,
+                    textAlignment = TextAlign.Left
                 )
             )
 
+            val passwordPlaceholder = "Password"
             CustomTextField(
-                label = "Password",
+                label = passwordPlaceholder,
                 value = password,
                 onValueChange = { },
                 readOnly = true,
@@ -112,12 +123,19 @@ fun Step1Screen(
                 modifier = Modifier.complianceTrack(
                     label = "PasswordTextField",
                     type = ComponentType.INPUT,
-                    value = password
+                    placeholder = passwordPlaceholder,
+                    value = password,
+                    isSecureTextEntry = true,
+                    masked = true,
+                    borderColor = Color.Black,
+                    borderWidth = 1f,
+                    textAlignment = TextAlign.Left
                 )
             )
 
+            val confirmPasswordPlaceholder = "Confirm Password"
             CustomTextField(
-                label = "Confirm Password",
+                label = confirmPasswordPlaceholder,
                 value = password,
                 onValueChange = { },
                 readOnly = true,
@@ -125,25 +143,33 @@ fun Step1Screen(
                 modifier = Modifier.complianceTrack(
                     label = "ConfirmPasswordTextField",
                     type = ComponentType.INPUT,
-                    value = password
+                    placeholder = confirmPasswordPlaceholder,
+                    value = password,
+                    isSecureTextEntry = true,
+                    masked = true,
+                    borderColor = Color.Black,
+                    borderWidth = 1f,
+                    textAlignment = TextAlign.Left
                 )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            val buttonText = "Next"
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .complianceTrack(
                         label = "NextButton",
                         type = ComponentType.BUTTON,
-                        value = "Next",
+                        value = buttonText,
                         textStyle = MaterialTheme.typography.labelLarge,
-                        backgroundColor = MaterialTheme.colorScheme.primary
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        cornerRadius = 8f
                     ),
                 onClick = onNavigateToStep2
             ) {
-                Text("Next")
+                Text(buttonText)
             }
         }
     }

@@ -12,18 +12,18 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun CustomTextField(
+    modifier: Modifier = Modifier,
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     readOnly: Boolean = false,
     isPassword: Boolean = false
 ) {
     OutlinedTextField(
+        modifier = modifier.fillMaxWidth(),
+        label = { Text(label) },
         value = value,
         onValueChange = onValueChange,
-        label = { Text(label) },
-        modifier = modifier.fillMaxWidth(),
         readOnly = readOnly,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = if (isPassword) KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions.Default

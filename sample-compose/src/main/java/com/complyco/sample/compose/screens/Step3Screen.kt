@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.complyco.complysdk.recorder.compose.extensions.ComponentType
@@ -57,7 +58,8 @@ fun Step3Screen(
                     label = "RegistrationCompleteTitle",
                     type = ComponentType.CONTENT,
                     value = "You're registered",
-                    textStyle = MaterialTheme.typography.headlineMedium
+                    textStyle = MaterialTheme.typography.headlineMedium,
+                    textAlignment = TextAlign.Left
                 )
             )
 
@@ -69,7 +71,8 @@ fun Step3Screen(
                     label = "RegistrationCompleteDescription",
                     type = ComponentType.CONTENT,
                     value = "Your email has been successfully verified. Your progress will now be saved going forward. If you need to stop, you can log back in with the username and password you just created.",
-                    textStyle = MaterialTheme.typography.bodyLarge
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    textAlignment = TextAlign.Left
                 )
             )
 
@@ -86,12 +89,14 @@ fun Step3Screen(
                         label = "UserCredentialsDisplay",
                         type = ComponentType.CONTENT,
                         value = "Username: ${user.username}\nEmail: ${user.email}",
-                        textStyle = MaterialTheme.typography.bodyMedium
+                        textStyle = MaterialTheme.typography.bodyMedium,
+                        textAlignment = TextAlign.Left
                     )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            val buttonText = "Complete"
             Button(
                 onClick = onApplicationComplete,
                 modifier = Modifier
@@ -99,12 +104,13 @@ fun Step3Screen(
                     .complianceTrack(
                         label = "ApplicationCompleteButton",
                         type = ComponentType.BUTTON,
-                        value = "Complete",
+                        value = buttonText,
                         textStyle = MaterialTheme.typography.labelLarge,
-                        backgroundColor = MaterialTheme.colorScheme.primary
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        textAlignment = TextAlign.Left
                     )
             ) {
-                Text("Complete")
+                Text(buttonText)
             }
         }
     }

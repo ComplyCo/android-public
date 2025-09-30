@@ -36,13 +36,13 @@ fun Step2Screen(
     onNavigateToStep3: () -> Unit
 ) {
     val isSystemInDarkTheme = isSystemInDarkTheme()
+    
+    val backgroundColor = if (isSystemInDarkTheme) Color.Black else Color.White
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(
-                if (isSystemInDarkTheme) Color.Black else Color.White
-            )
+            .background(backgroundColor)
             .combinedClickable(
                 onClick = {},
                 onLongClick = { onSetData() }
@@ -50,7 +50,7 @@ fun Step2Screen(
             .complianceTrack(
                 label = "Step2Screen",
                 type = ComponentType.SCREEN,
-                backgroundColor = if (isSystemInDarkTheme) Color.Black else Color.White
+                backgroundColor = backgroundColor
             )
     ) {
         Column(
@@ -59,27 +59,31 @@ fun Step2Screen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            val title = "Please verify your email"
             Text(
-                text = "Please verify your email",
+                text = title,
                 style = MaterialTheme.typography.headlineMedium,
                 color = if (isSystemInDarkTheme) Color.White else Color.Black,
                 modifier = Modifier.complianceTrack(
-                    label = "VerifyEmailTitle",
+                    label = "VerifyEmailTitleText",
                     type = ComponentType.CONTENT,
-                    value = "Please verify your email",
-                    textStyle = MaterialTheme.typography.headlineMedium
+                    value = title,
+                    textStyle = MaterialTheme.typography.headlineMedium,
+                    textAlignment = TextAlign.Left
                 )
             )
 
+            val subtitle = "Please enter the one-time 6 digit code that we have emailed to you"
             Text(
-                text = "Please enter the one-time 6 digit code that we have emailed to you",
+                text = subtitle,
                 style = MaterialTheme.typography.bodyLarge,
                 color = if (isSystemInDarkTheme) Color.LightGray else Color.DarkGray,
                 modifier = Modifier.complianceTrack(
-                    label = "VerifyEmailSubtitle",
+                    label = "VerifyEmailSubtitleText",
                     type = ComponentType.CONTENT,
-                    value = "Please enter the one-time 6 digit code that we have emailed to you",
-                    textStyle = MaterialTheme.typography.bodyLarge
+                    value = subtitle,
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    textAlignment = TextAlign.Left
                 )
             )
 
@@ -98,7 +102,10 @@ fun Step2Screen(
                             .complianceTrack(
                                 label = "CodeDigit${index + 1}Text",
                                 type = ComponentType.INPUT,
-                                value = digit
+                                value = digit,
+                                borderColor = Color.Black,
+                                borderWidth = 1f,
+                                textAlignment = TextAlign.Center
                             ),
                         textStyle = TextStyle(textAlign = TextAlign.Center),
                         singleLine = true,
@@ -109,6 +116,7 @@ fun Step2Screen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            val buttonText = "Verify"
             Button(
                 onClick = onNavigateToStep3,
                 modifier = Modifier
@@ -116,12 +124,13 @@ fun Step2Screen(
                     .complianceTrack(
                         label = "VerifyButton",
                         type = ComponentType.BUTTON,
-                        value = "Verify",
+                        value = buttonText,
                         textStyle = MaterialTheme.typography.labelLarge,
-                        backgroundColor = MaterialTheme.colorScheme.primary
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        cornerRadius = 8f
                     )
             ) {
-                Text("Verify")
+                Text(buttonText)
             }
         }
     }
