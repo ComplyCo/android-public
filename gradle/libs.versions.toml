@@ -11,7 +11,7 @@ composeBom = "2024.09.00"
 material = "1.13.0"
 navigationCompose = "2.9.4"
 composableWebview = "0.6"
-complySdk = "0.0.1-alpha02"
+complySdk = "0.0.1-alpha03"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
