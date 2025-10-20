@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,7 +31,12 @@ fun Step1Screen(
     modifier: Modifier = Modifier,
     user: DemoUser,
     password: String,
-    onSetData: () -> Unit,
+    passwordConfirm: String,
+    onEmailAddressUpdated: (String) -> Unit,
+    onUsernameUpdated: (String) -> Unit,
+    onPasswordUpdated: (String) -> Unit,
+    onConfirmPasswordUpdated: (String) -> Unit,
+    onSetMockData: () -> Unit,
     onNavigateToStep2: () -> Unit
 ) {
     Box(
@@ -38,7 +44,7 @@ fun Step1Screen(
             .fillMaxSize()
             .combinedClickable(
                 onClick = {},
-                onLongClick = { onSetData() }
+                onLongClick = { onSetMockData() }
             )
             .background(Color.White)
             .complianceTrack(
@@ -81,10 +87,6 @@ fun Step1Screen(
 
             val emailPlaceholder = "Email address"
             CustomTextField(
-                label = emailPlaceholder,
-                value = user.email,
-                onValueChange = { },
-                readOnly = true,
                 modifier = Modifier.complianceTrack(
                     label = "EmailTextField",
                     type = ComponentType.INPUT,
@@ -93,15 +95,14 @@ fun Step1Screen(
                     borderColor = Color.Black,
                     borderWidth = 1f,
                     textAlignment = TextAlign.Left
-                )
+                ),
+                label = emailPlaceholder,
+                value = user.email,
+                onValueChange = onEmailAddressUpdated
             )
 
             val usernamePlaceholder = "Username"
             CustomTextField(
-                label = usernamePlaceholder,
-                value = user.username,
-                onValueChange = { },
-                readOnly = true,
                 modifier = Modifier.complianceTrack(
                     label = "UsernameTextField",
                     type = ComponentType.INPUT,
@@ -110,16 +111,14 @@ fun Step1Screen(
                     borderColor = Color.Black,
                     borderWidth = 1f,
                     textAlignment = TextAlign.Left
-                )
+                ),
+                label = usernamePlaceholder,
+                value = user.username,
+                onValueChange = onUsernameUpdated
             )
 
             val passwordPlaceholder = "Password"
             CustomTextField(
-                label = passwordPlaceholder,
-                value = password,
-                onValueChange = { },
-                readOnly = true,
-                isPassword = true,
                 modifier = Modifier.complianceTrack(
                     label = "PasswordTextField",
                     type = ComponentType.INPUT,
@@ -130,27 +129,31 @@ fun Step1Screen(
                     borderColor = Color.Black,
                     borderWidth = 1f,
                     textAlignment = TextAlign.Left
-                )
+                ),
+                label = passwordPlaceholder,
+                value = password,
+                onValueChange = onPasswordUpdated,
+                isPassword = true
             )
 
             val confirmPasswordPlaceholder = "Confirm Password"
             CustomTextField(
-                label = confirmPasswordPlaceholder,
-                value = password,
-                onValueChange = { },
-                readOnly = true,
-                isPassword = true,
                 modifier = Modifier.complianceTrack(
                     label = "ConfirmPasswordTextField",
                     type = ComponentType.INPUT,
                     placeholder = confirmPasswordPlaceholder,
-                    value = password,
+                    value = passwordConfirm,
                     isSecureTextEntry = true,
                     masked = true,
                     borderColor = Color.Black,
                     borderWidth = 1f,
                     textAlignment = TextAlign.Left
-                )
+                ),
+                label = confirmPasswordPlaceholder,
+                value = passwordConfirm,
+                onValueChange = onConfirmPasswordUpdated,
+                isPassword = true,
+                imeAction = ImeAction.Done
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -185,7 +188,12 @@ fun Step1ScreenPreview() {
                 username = "testUser"
             ),
             password = "123456",
-            onSetData = {},
+            passwordConfirm = "123456",
+            onEmailAddressUpdated = {},
+            onUsernameUpdated = {},
+            onPasswordUpdated = {},
+            onConfirmPasswordUpdated = {},
+            onSetMockData = {},
             onNavigateToStep2 = {}
         )
     }

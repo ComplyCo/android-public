@@ -97,13 +97,20 @@ fun OnboardingNavigation(
         composable("step1") {
             val mockData = remember { mutableStateOf(DemoUser.EMPTY) }
             val mockPassword = remember { mutableStateOf("") }
+            val mockPasswordConfirm = remember { mutableStateOf("") }
             Step1Screen(
                 modifier = Modifier.fillMaxSize(),
                 user = mockData.value,
                 password = mockPassword.value,
-                onSetData = {
+                passwordConfirm = mockPasswordConfirm.value,
+                onEmailAddressUpdated = { mockData.value = mockData.value.copy(email = it) },
+                onUsernameUpdated = { mockData.value = mockData.value.copy(username = it) },
+                onPasswordUpdated = { mockPassword.value = it },
+                onConfirmPasswordUpdated = { mockPasswordConfirm.value = it },
+                onSetMockData = {
                     mockData.value = mockUser
                     mockPassword.value = "123456"
+                    mockPasswordConfirm.value = "123456"
                 },
                 onNavigateToStep2 = {
                     navController.navigate("step2")
@@ -112,11 +119,17 @@ fun OnboardingNavigation(
         }
 
         composable("step2") {
-            val mockData = remember { mutableStateOf<List<String>>(emptyList()) }
+            val data = remember { mutableStateOf(Array(6) { "" }) }
             Step2Screen(
                 modifier = Modifier.fillMaxSize(),
-                data = mockData.value,
-                onSetData = { mockData.value = listOf("3", "4", "1", "6", "5", "9") },
+                data = data.value,
+                onDataUpdate = { position, value ->
+                    val newArray = data.value.copyOf()
+                    newArray[position] = value
+                    data.value = newArray
+                },
+                isDataReady = data.value.all { it.isNotEmpty() && it.matches(Regex("\\d")) },
+                onSetMockData = { data.value = arrayOf("3", "4", "1", "6", "5", "9") },
                 onNavigateToStep3 = {
                     navController.navigate("step3")
                 }

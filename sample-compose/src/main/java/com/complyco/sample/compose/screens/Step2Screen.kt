@@ -13,14 +13,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,13 +38,16 @@ import com.complyco.sample.compose.ui.theme.ComplySampleTheme
 @Composable
 fun Step2Screen(
     modifier: Modifier = Modifier,
-    data: List<String>,
-    onSetData: () -> Unit,
+    data: Array<String>,
+    onDataUpdate: (position: Int, value: String) -> Unit,
+    isDataReady: Boolean = false,
+    onSetMockData: () -> Unit,
     onNavigateToStep3: () -> Unit
 ) {
     val isSystemInDarkTheme = isSystemInDarkTheme()
-    
     val backgroundColor = if (isSystemInDarkTheme) Color.Black else Color.White
+
+    val focusManager: FocusManager = LocalFocusManager.current
 
     Box(
         modifier = modifier
@@ -45,7 +55,7 @@ fun Step2Screen(
             .background(backgroundColor)
             .combinedClickable(
                 onClick = {},
-                onLongClick = { onSetData() }
+                onLongClick = { onSetMockData() }
             )
             .complianceTrack(
                 label = "Step2Screen",
@@ -63,7 +73,6 @@ fun Step2Screen(
             Text(
                 text = title,
                 style = MaterialTheme.typography.headlineMedium,
-                color = if (isSystemInDarkTheme) Color.White else Color.Black,
                 modifier = Modifier.complianceTrack(
                     label = "VerifyEmailTitleText",
                     type = ComponentType.CONTENT,
@@ -77,7 +86,6 @@ fun Step2Screen(
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (isSystemInDarkTheme) Color.LightGray else Color.DarkGray,
                 modifier = Modifier.complianceTrack(
                     label = "VerifyEmailSubtitleText",
                     type = ComponentType.CONTENT,
@@ -94,22 +102,37 @@ fun Step2Screen(
                 repeat(6) { index ->
                     val digit = data.getOrNull(index) ?: ""
                     OutlinedTextField(
-                        value = digit,
-                        onValueChange = { },
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
                             .complianceTrack(
-                                label = "CodeDigit${index + 1}Text",
+                                label = "CodeDigit${index + 1}TextField",
                                 type = ComponentType.INPUT,
                                 value = digit,
                                 borderColor = Color.Black,
                                 borderWidth = 1f,
                                 textAlignment = TextAlign.Center
                             ),
+                        value = digit,
+                        onValueChange = {
+                            // Only process the first character and ensure it's a digit
+                            val newDigit = it.take(1)
+                            onDataUpdate(index, newDigit)
+                            // Move focus only if a character was entered
+                            if (newDigit.isNotEmpty() && index < 5) {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }
+                        },
                         textStyle = TextStyle(textAlign = TextAlign.Center),
                         singleLine = true,
-                        readOnly = true
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = if (index < 5) ImeAction.Next else ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { focusManager.moveFocus(FocusDirection.Next) },
+                            onDone = { focusManager.clearFocus() }
+                        )
                     )
                 }
             }
@@ -128,7 +151,8 @@ fun Step2Screen(
                         textStyle = MaterialTheme.typography.labelLarge,
                         backgroundColor = MaterialTheme.colorScheme.primary,
                         cornerRadius = 8f
-                    )
+                    ),
+                enabled = isDataReady
             ) {
                 Text(buttonText)
             }
@@ -142,8 +166,9 @@ fun Step2ScreenPreview() {
     ComplySampleTheme {
         Step2Screen(
             modifier = Modifier.fillMaxSize(),
-            data = listOf("3", "4", "1", "6", "5", "9"),
-            onSetData = {},
+            data = arrayOf("3", "4", "1", "6", "5", "9"),
+            onDataUpdate = { _, _ -> },
+            onSetMockData = {},
             onNavigateToStep3 = {}
         )
     }
