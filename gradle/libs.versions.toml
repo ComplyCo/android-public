@@ -33,8 +33,8 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 composable-webview = { module = "com.ivangarzab:composable-webview", version.ref = "composableWebview" }
 
 # ComplySDK dependencies
-complysdk-recorder-compose = { module = "com.complyco.complysdk:recorder-compose", version.ref = "complySdk" }
-complysdk-recorder-xml = { module = "com.complyco.complysdk:recorder-xml", version.ref = "complySdk" }
+complysdk-recorder-compose = { module = "com.complyco:recorder-compose", version.ref = "complySdk" }
+complysdk-recorder-xml = { module = "com.complyco:recorder-xml", version.ref = "complySdk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

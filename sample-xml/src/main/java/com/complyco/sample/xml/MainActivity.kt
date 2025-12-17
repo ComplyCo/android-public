@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.webkit.WebView
-import com.complyco.complysdk.core.api.User
-import com.complyco.complysdk.networking.BuildConfig
-import com.complyco.complysdk.networking.auth.models.JwtConfig
-import com.complyco.complysdk.recorder.base.Comply
-import com.complyco.complysdk.recorder.base.ComplyInitializationListener
-import com.complyco.complysdk.recorder.base.error.RecorderError
-import com.complyco.complysdk.recorder.xml.extensions.initializeView
-import com.complyco.complysdk.recorder.xml.extensions.startView
-import com.complyco.complysdk.recorder.xml.open.ViewComplyOptions
+import com.complyco.core.api.User
+import com.complyco.networking.BuildConfig
+import com.complyco.networking.auth.models.JwtConfig
+import com.complyco.recorder.base.Comply
+import com.complyco.recorder.base.ComplyInitializationListener
+import com.complyco.recorder.base.error.RecorderError
+import com.complyco.recorder.xml.extensions.initializeView
+import com.complyco.recorder.xml.extensions.startView
+import com.complyco.recorder.xml.open.ViewComplyOptions
 import com.ivangarzab.bark.Bark
 
 class MainActivity : Activity() {

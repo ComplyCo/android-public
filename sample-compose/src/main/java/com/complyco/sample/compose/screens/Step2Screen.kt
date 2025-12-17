@@ -31,8 +31,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.complyco.complysdk.recorder.compose.extensions.ComponentType
-import com.complyco.complysdk.recorder.compose.extensions.complianceTrack
+import com.complyco.recorder.compose.extensions.ComponentType
+import com.complyco.recorder.compose.extensions.complianceTrack
 import com.complyco.sample.compose.ui.theme.ComplySampleTheme
 
 @Composable
