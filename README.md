@@ -28,7 +28,7 @@ This solution leverages the `com.complyco.complysdk.recording-compose` package.
 
 ## Copyright
 
-_TBD..._
+Copyright (c) 2025 ComplyCo. All rights reserved.
 
 ---------------
 
