@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.complyco.recorder.compose.extensions.ComponentType
 import com.complyco.recorder.compose.extensions.complianceTrack
 import com.complyco.sample.compose.components.DemoUser
-import com.complyco.sample.compose.ui.theme.ComplySampleTheme
+import com.complyco.sample.compose.ui.theme.ComplyCoSamplesTheme
 
 @Composable
 fun Step3Screen(
@@ -119,7 +119,7 @@ fun Step3Screen(
 @Preview
 @Composable
 fun Step3ScreenPreview() {
-    ComplySampleTheme {
+    ComplyCoSamplesTheme {
         Step3Screen(
             user = DemoUser(
                 username = "testUser",

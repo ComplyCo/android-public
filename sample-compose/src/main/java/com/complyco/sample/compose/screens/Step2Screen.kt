@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.complyco.recorder.compose.extensions.ComponentType
 import com.complyco.recorder.compose.extensions.complianceTrack
-import com.complyco.sample.compose.ui.theme.ComplySampleTheme
+import com.complyco.sample.compose.ui.theme.ComplyCoSamplesTheme
 
 @Composable
 fun Step2Screen(
@@ -163,7 +163,7 @@ fun Step2Screen(
 @Preview
 @Composable
 fun Step2ScreenPreview() {
-    ComplySampleTheme {
+    ComplyCoSamplesTheme {
         Step2Screen(
             modifier = Modifier.fillMaxSize(),
             data = arrayOf("3", "4", "1", "6", "5", "9"),

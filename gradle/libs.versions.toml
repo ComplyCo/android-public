@@ -1,5 +1,5 @@
 [versions]
-agp = "8.12.3"
+agp = "8.13.2"
 kotlin = "2.0.21"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -10,10 +10,12 @@ activityCompose = "1.10.1"
 composeBom = "2024.09.00"
 material = "1.13.0"
 navigationCompose = "2.9.4"
+okhttp = "4.12.0"
 composableWebview = "0.6"
-complyCoRecorder = "0.0.1-alpha04"
+complyCoRecorder = "0.0.1-alpha13"
 
 [libraries]
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -31,6 +33,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 composable-webview = { module = "com.ivangarzab:composable-webview", version.ref = "composableWebview" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 
 # ComplyCo Recorder dependencies
 complyco-recorder-compose = { module = "com.complyco:recorder-compose", version.ref = "complyCoRecorder" }

@@ -16,28 +16,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.complyco.core.api.User
-import com.complyco.networking.BuildConfig
-import com.complyco.networking.auth.models.JwtConfig
-import com.complyco.recorder.base.Comply
-import com.complyco.recorder.base.ComplyInitializationListener
-import com.complyco.recorder.base.error.RecorderError
+import com.complyco.recorder.Engine
+import com.complyco.recorder.InitializationListener
 import com.complyco.recorder.compose.extensions.initializeCompose
 import com.complyco.recorder.compose.extensions.startCompose
-import com.complyco.recorder.compose.options.ComposeComplyOptions
+import com.complyco.recorder.compose.options.ComposeOptions
+import com.complyco.recorder.error.RecorderError
 import com.complyco.sample.compose.components.DemoUser
 import com.complyco.sample.compose.screens.Step1Screen
 import com.complyco.sample.compose.screens.Step2Screen
 import com.complyco.sample.compose.screens.Step3Screen
-import com.complyco.sample.compose.ui.theme.ComplySampleTheme
+import com.complyco.sample.compose.ui.theme.ComplyCoSamplesTheme
 import com.ivangarzab.bark.Bark
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var tokenFetcher: TokenFetcher
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ComplySampleTheme {
+            ComplyCoSamplesTheme {
                 Scaffold {
                     OnboardingNavigation(
                         modifier = Modifier.padding(it)
@@ -46,34 +46,37 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // Initialize the Compose compliance engine using the unified Comply entry point
-        Comply.initializeCompose(
+        // Initialize TokenFetcher with the JWT server URL
+        tokenFetcher = TokenFetcher(
+            url = "http://api-example.your-bank.com/api/jwt"
+        )
+
+        // Start periodic token fetching
+        tokenFetcher.start()
+
+        // Initialize the Engine with the TokenFetcher's jwtProducer
+        Engine.initializeCompose(
             context = this,
-            jwtConfig = JwtConfig.LocalGenerated(
-                privateKeyPem = BuildConfig.COMPLY_KEY,
-                user = User(
-                    issuer = "OpenSSL",
-                    audience = "app-zk58pzf3k6",
-                    userId = "ivan-test-user",
-                    email = "ivan@complyco.com",
-                    accountApplicationId = "android-jetpack-compose",
-                    productId = "deposit",
-                    institutionId = "ivan_test"
-                )
-            ),
-            options = ComposeComplyOptions.default(),
-            initializationListener = object : ComplyInitializationListener {
-                override fun complyDidInitialized() {
+            options = ComposeOptions.default(),
+            jwtProducer = tokenFetcher.getJwtProducer(),
+            initializationListener = object : InitializationListener {
+                override fun didInitialized() {
                     Bark.d("Engine initialized successfully")
                     // Start tracking after initialization
-                    Comply.startCompose(Any())
+                    Engine.startCompose(Any())
                 }
 
-                override fun complyDidFailedToInitialize(error: RecorderError) {
+                override fun didFailedToInitialize(error: RecorderError) {
                     Bark.e("Engine failed to initialize: $error")
                 }
             }
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Stop the token fetcher when the activity is destroyed
+        tokenFetcher.stop()
     }
 }
 
@@ -85,8 +88,8 @@ fun OnboardingNavigation(
 
     // Mock user data - replace with your actual user data source
     val mockUser = DemoUser(
-        email = "ivan@complyco.com",
-        username = "ivan-test-user"
+        email = "user@example.com",
+        username = "example-test-user"
     )
 
     NavHost(

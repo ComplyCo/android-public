@@ -24,7 +24,7 @@ import com.complyco.recorder.compose.extensions.ComponentType
 import com.complyco.recorder.compose.extensions.complianceTrack
 import com.complyco.sample.compose.components.CustomTextField
 import com.complyco.sample.compose.components.DemoUser
-import com.complyco.sample.compose.ui.theme.ComplySampleTheme
+import com.complyco.sample.compose.ui.theme.ComplyCoSamplesTheme
 
 @Composable
 fun Step1Screen(
@@ -181,7 +181,7 @@ fun Step1Screen(
 @Preview
 @Composable
 fun Step1ScreenPreview() {
-    ComplySampleTheme {
+    ComplyCoSamplesTheme {
         Step1Screen(
             user = DemoUser(
                 email = "test@complyco.com",

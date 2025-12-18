@@ -4,15 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.webkit.WebView
-import com.complyco.core.api.User
-import com.complyco.networking.BuildConfig
-import com.complyco.networking.auth.models.JwtConfig
-import com.complyco.recorder.base.Comply
-import com.complyco.recorder.base.ComplyInitializationListener
-import com.complyco.recorder.base.error.RecorderError
+import com.complyco.recorder.Engine
+import com.complyco.recorder.InitializationListener
+import com.complyco.recorder.error.RecorderError
 import com.complyco.recorder.xml.extensions.initializeView
 import com.complyco.recorder.xml.extensions.startView
-import com.complyco.recorder.xml.open.ViewComplyOptions
+import com.complyco.recorder.xml.open.ViewOptions
 import com.ivangarzab.bark.Bark
 
 class MainActivity : Activity() {
@@ -25,29 +22,20 @@ class MainActivity : Activity() {
         // Find the WebView from the XML layout
         val webView: WebView = findViewById(R.id.formWebView)
         webView.getSettings().javaScriptEnabled = true
-        webView.loadUrl("https://github.com/ivangarzab/composable-webview")
+        webView.loadUrl("https://your-bank.example.com/")
 
-        Comply.initializeView(
+        val jwtProducer = { "example-token" }
+
+        Engine.initializeView(
             context = this,
-            jwtConfig = JwtConfig.LocalGenerated(
-                privateKeyPem = BuildConfig.COMPLY_KEY,
-                user = User(
-                    issuer = "OpenSSL",
-                    audience = "app-zk58pzf3k6",
-                    userId = "ivan-test-user",
-                    email = "ivan@complyco.com",
-                    accountApplicationId = "android-xml",
-                    productId = "withdrawal",
-                    institutionId = "ivan_test"
-                )
-            ),
-            options = ViewComplyOptions.default(),
-            initializationListener = object : ComplyInitializationListener {
-                override fun complyDidInitialized() {
+            options = ViewOptions.default(),
+            jwtProducer = jwtProducer,
+            initializationListener = object : InitializationListener {
+                override fun didInitialized() {
                     // Start tracking after successful initialization
-                    Comply.startView(window)
+                    Engine.startView(window)
                 }
-                override fun complyDidFailedToInitialize(error: RecorderError) {
+                override fun didFailedToInitialize(error: RecorderError) {
                     Bark.e("Initialization failed: $error")
                 }
             }
