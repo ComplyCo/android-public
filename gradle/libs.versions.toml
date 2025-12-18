@@ -11,7 +11,7 @@ composeBom = "2024.09.00"
 material = "1.13.0"
 navigationCompose = "2.9.4"
 composableWebview = "0.6"
-complySdk = "0.0.1-alpha04"
+complyCoRecorder = "0.0.1-alpha04"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,9 +32,9 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 material = { module = "com.google.android.material:material", version.ref = "material" }
 composable-webview = { module = "com.ivangarzab:composable-webview", version.ref = "composableWebview" }
 
-# ComplySDK dependencies
-complysdk-recorder-compose = { module = "com.complyco:recorder-compose", version.ref = "complySdk" }
-complysdk-recorder-xml = { module = "com.complyco:recorder-xml", version.ref = "complySdk" }
+# ComplyCo Recorder dependencies
+complyco-recorder-compose = { module = "com.complyco:recorder-compose", version.ref = "complyCoRecorder" }
+complyco-recorder-xml = { module = "com.complyco:recorder-xml", version.ref = "complyCoRecorder" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

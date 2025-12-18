@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.complysdk.recorder.xml)
+    implementation(libs.complyco.recorder.xml)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)

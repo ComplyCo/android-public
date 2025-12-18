@@ -44,7 +44,7 @@ android {
 
 dependencies {
 
-    implementation(libs.complysdk.recorder.compose)
+    implementation(libs.complyco.recorder.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
